@@ -23,6 +23,7 @@ function ListBlogsUserView(props) {
 
   const editBlog = blogId => {
     //go to edit view get data
+    props.history.push(`edit/${blogId}`)
   }
 
   return (
@@ -42,7 +43,7 @@ function ListBlogsUserView(props) {
                 return(
                   <Grid key={index} item xs={12}>
                     <span style={{ cursor: "pointer", marginLeft: 10, fontSize: 14 }} onClick={() => editBlog(item.BlogId)}>
-                      item.Name
+                      {item.Name}
                     </span>
                   </Grid>
               )})}

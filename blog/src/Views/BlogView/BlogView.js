@@ -14,7 +14,7 @@ function BlogView(props) {
   const [form, onChangeForm] = useState(blogFormInputsState);
   const [formInput, onChangeFormInput] = useState(blogFormInputs);
   const mode = props.match.path === "/add" ? "new" : "edit";
-  // const path = props.match.path;
+  const blogId = mode == 'edit' ? props.match.params.blogId : null
 
   const getList = async listName => {
     var urlName = `Get${listName}`;
@@ -31,8 +31,9 @@ function BlogView(props) {
     return null
   };
 
-  getEditedData = () => {
-
+  const getEditedData = async () => {
+    var response = await sendWebRequest(ApiUrlsDict.GetBlog.replace(":BlogId", blogId), "GET", "", { Authorization: `Token ${token}`, "Content-Type": "application/json"});
+    console.log(response)
   }
 
   useEffect(() => {

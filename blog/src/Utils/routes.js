@@ -14,6 +14,7 @@ export const PATHS = {
   HOME: "/",
   ADD: "/add",
   EDIT: "/edit",
+  EDITBLOG: "/edit/:blogId",
   SEARCH: "/search",
   CONTACT: "/contact",
   LOGIN: "/login",
@@ -43,6 +44,15 @@ export const routes = [
     component: ListBlogsUserView,
     itemText: "Edit",
     itemIcon: <EditIcon />
+  },
+  {
+    showInMenu: false,
+    showIfLogIn: false,
+    showIfLogOut: false,
+    path: PATHS.EDITBLOG,
+    component: BlogView,
+    itemText: "Edit Blog",
+    itemIcon: null
   },
   {
     showInMenu: true,
