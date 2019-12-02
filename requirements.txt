@@ -1,0 +1,13 @@
+npm
+npm install @material-ui/core
+npm install @material-ui/icons
+npm install @material-ui/system
+npm install redux
+npm install react-redux
+npm install --save redux-actions
+npm install --save redux-thunk
+npm install --save prop-types
+npm install react react-dom
+npm install --save react-router-dom
+npm install react-select
+npm install --save react-toastify
