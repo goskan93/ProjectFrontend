@@ -31,6 +31,10 @@ function BlogView(props) {
     return null
   };
 
+  getEditedData = () => {
+
+  }
+
   useEffect(() => {
     const selectInputs = formInput.filter(x => x.inputType === "SelectInput");
     let formInputListUpdated = formInput
@@ -43,6 +47,8 @@ function BlogView(props) {
         onChangeFormInput(formInputListUpdated);
       });
     }
+    if(mode === "edit") getEditedData()
+
   },[]);
 
   const onChangeInput = fieldName => value => {

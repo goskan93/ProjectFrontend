@@ -6,7 +6,7 @@ export const ApiUrlsDict = {
   GetLanguagesList: `${baseAPI}GetLanguagesList/`,
   GetCountriesList: `${baseAPI}GetCountriesList/`,
   CreateBlog: `${baseAPI}CreateBlog/`,
-  GetUsersBlogs: `${baseAPI}GetUsersBlogs/`,
+  GetUserBlogs: `${baseAPI}GetUsersBlogs/`,
 
   Register: `${authAPI}registration/`,
   Login: `${authAPI}login/`
