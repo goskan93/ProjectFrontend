@@ -19,27 +19,31 @@ function BlogView(props) {
   const getList = async listName => {
     var urlName = `Get${listName}`;
     var response = await sendWebRequest(ApiUrlsDict[urlName], "GET", "");
-    var listData = response.result.map(item => {
-      return {
-        label: item.name,
-        value: item.id
-      };
-    });
-    return listData;
+    if(response.result.length > 0){
+      var listData = response.result.map(item => {
+        return {
+          label: item.name,
+          value: item.id
+        };
+      });
+      return listData;
+    }
+    return null
   };
 
   useEffect(() => {
     const selectInputs = formInput.filter(x => x.inputType === "SelectInput");
+    let formInputListUpdated = formInput
     if (selectInputs) {
       selectInputs.forEach(async item => {
-        let listData = await getList(item.options);
-        const formInputListUpdated = formInput.map(x =>
+        let listData = await getList(item.apiUrlName);
+        formInputListUpdated = formInputListUpdated.map(x =>
           x.fieldName === item.fieldName ? { ...x, options: listData } : x
         );
         onChangeFormInput(formInputListUpdated);
       });
     }
-  });
+  },[]);
 
   const onChangeInput = fieldName => value => {
     onChangeForm({ ...form, [fieldName]: value });

@@ -56,13 +56,15 @@ export const blogFormInputsState = {
     },
     {
       inputType: "SelectInput",
-      options: "CountriesList",
+      apiUrlName: "CountriesList",
+      options: {},
       fieldName: "Countries",
       otherProps: {}
     },
     {
       inputType: "SelectInput",
-      options: "LanguagesList",
+      apiUrlName: "LanguagesList",
+      options: {},
       fieldName: "Languages",
       otherProps: {}
     },
