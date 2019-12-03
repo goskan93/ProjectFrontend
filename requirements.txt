@@ -6,6 +6,7 @@ npm install redux
 npm install react-redux
 npm install --save redux-actions
 npm install --save redux-thunk
+npm install redux-persist
 npm install --save prop-types
 npm install react react-dom
 npm install --save react-router-dom

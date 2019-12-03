@@ -47,12 +47,8 @@ export const routes = [
   },
   {
     showInMenu: false,
-    showIfLogIn: false,
-    showIfLogOut: false,
     path: PATHS.EDITBLOG,
     component: BlogView,
-    itemText: "Edit Blog",
-    itemIcon: null
   },
   {
     showInMenu: true,

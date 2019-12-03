@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { Redirect } from "react-router";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { PATHS } from "../../Utils/routes";
@@ -27,39 +28,45 @@ function ListBlogsUserView(props) {
   }
 
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      <Grid item md={3} />
-      <Grid item xs={12} md={6}>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={1}
-        >   
-          {hasBlogs ? 
-            <>
-              {blogsUser.map((item, index) => {
-                return(
-                  <Grid key={index} item xs={12}>
-                    <span style={{ cursor: "pointer", marginLeft: 10, fontSize: 14 }} onClick={() => editBlog(item.BlogId)}>
-                      {item.Name}
-                    </span>
-                  </Grid>
-              )})}
-            </>
-          :
-            <span>You did not add yet any blog.</span>
-          }
-          <Grid item xs={12}>
-            <Button variant="contained" onClick={console.log('add')}>
-              Add new
-            </Button>
+    <>
+      {token? 
+          <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item md={3} />
+          <Grid item xs={12} md={6}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              spacing={1}
+            >   
+              {hasBlogs ? 
+                <>
+                  {blogsUser.map((item, index) => {
+                    return(
+                      <Grid key={index} item xs={12}>
+                        <span style={{ cursor: "pointer", marginLeft: 10, fontSize: 14 }} onClick={() => editBlog(item.BlogId)}>
+                          {item.Name}
+                        </span>
+                      </Grid>
+                  )})}
+                </>
+              :
+                <span>You did not add yet any blog.</span>
+              }
+              <Grid item xs={12}>
+                <Button variant="contained" onClick={console.log('add')}>
+                  Add new
+                </Button>
+              </Grid>
+            </Grid>             
           </Grid>
-        </Grid>             
-      </Grid>
-      <Grid item md={3} />
-    </Grid>
+          <Grid item md={3} />
+        </Grid>
+      :
+        <Redirect to={PATHS.LOGIN}/>
+      }
+    </>
   )
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -101,40 +102,47 @@ function BlogView(props) {
       console.log(response.result);
     }
   };
+
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      <Grid item md={3} />
-      <Grid item xs={12} md={6}>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={1}
-        >
-          <BlogForm
-            form={form}
-            formInput={formInput}
-            onChangeInput={onChangeInput}
-            onBlurInput={onBlurInput}
-            onImageChange={onImageChange}
-            {...props}
-          />
+    <>
+      {token ?         
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item md={3} />
+          <Grid item xs={12} md={6}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              spacing={1}
+            >
+              <BlogForm
+                form={form}
+                formInput={formInput}
+                onChangeInput={onChangeInput}
+                onBlurInput={onBlurInput}
+                onImageChange={onImageChange}
+                {...props}
+              />
+            </Grid>
+            <Button variant="contained" onClick={sendForm}>
+              {mode === "new" ? "Add" : "Edit"}
+            </Button>
+            {mode !== "new" && (
+              <Button variant="contained" onClick={sendForm}>
+                Delete
+              </Button>
+            )}
+          </Grid>
+          <Grid item md={3} />
+          {/* <Grid item component={Box} md={6} display={{ xs: "none", md: "block" }}>
+            <span style={{ color: green }}>YY</span>
+          </Grid> */}
         </Grid>
-        <Button variant="contained" onClick={sendForm}>
-          {mode === "new" ? "Add" : "Edit"}
-        </Button>
-        {mode !== "new" && (
-          <Button variant="contained" onClick={sendForm}>
-            Delete
-          </Button>
-        )}
-      </Grid>
-      <Grid item md={3} />
-      {/* <Grid item component={Box} md={6} display={{ xs: "none", md: "block" }}>
-        <span style={{ color: green }}>YY</span>
-      </Grid> */}
-    </Grid>
+        :
+        <Redirect to={PATHS.LOGIN}/>
+      }
+    </>
   );
 }
 function mapStateToProps({ auth }) {
