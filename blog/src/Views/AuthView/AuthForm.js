@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { TextInput } from "../../Components";
 
 function AuthForm(props) {
@@ -6,22 +6,21 @@ function AuthForm(props) {
   return (
     <>
       {formInputs.map((input, index) => {
-        if (input.isVisible) {
-          return (
-            <TextInput
-              key={index}
-              label={input.label}
-              value={form[input.fieldName]}
-              onChange={value => onChangeInput(input.fieldName, value)}
-              onBlur={value => onBlurInput(input.fieldName)}
-              error={input.error}
-              helperText={input.error ? input.helperText : ""}
-              {...input.otherProps}
-            />
-          );
-        } else {
-          return <></>;
-        }
+        return (
+          <Fragment key={index} >      
+            {input.isVisible &&
+              <TextInput
+                label={input.label}
+                value={form[input.fieldName]}
+                onChange={value => onChangeInput(input.fieldName, value)}
+                onBlur={value => onBlurInput(input.fieldName)}
+                error={input.error}
+                helperText={input.error ? input.helperText : ""}
+                {...input.otherProps}
+              />
+            }
+          </Fragment>
+        );      
       })}
     </>
   );

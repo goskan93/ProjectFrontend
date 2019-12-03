@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import BlogForm from "./BlogForm";
-import { blogFormInputs, blogFormInputsState } from "../../Utils/blogForm";
+import { blogFormInputs, blogFormInputsState } from "../../Utils/blogForm"; //blogFormInputsState
 import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
 import { PATHS } from "../../Utils/routes";
 import { notifySuccess } from "../../Utils/notifications";
@@ -17,7 +17,7 @@ function BlogView(props) {
   const [formInput, onChangeFormInput] = useState(blogFormInputs);
   const mode = props.match.path === PATHS.BLOGADD ? "new" : "edit";
   const blogId = mode === 'edit' ? props.match.params.blogId : null
-  console.log(token)
+  
   const getList = async listName => {
     var urlName = `Get${listName}`;
     var response = await sendWebRequest(ApiUrlsDict[urlName], "GET", "");
@@ -37,7 +37,7 @@ function BlogView(props) {
     var response = await sendWebRequest(ApiUrlsDict.GetBlog.replace(":BlogId", blogId), "GET", "", { Authorization: `Token ${token}`, "Content-Type": "application/json"});
     if(response.Message === "OK"){
       const data = response.result
-      let newForm = form
+      let newForm = {}
       newForm.Name = data.Name
       newForm.BlogId = data.BlogId
       const listLanguages = formInput.find(x => x.apiUrlName === "LanguagesList").options
@@ -50,7 +50,7 @@ function BlogView(props) {
         var country = listCountries.find(x => x.value === item) 
         return {label: country.label, value: country.value }
       })
-      onChangeForm(newForm)
+      onChangeForm({...form, ...newForm})
       setTimeout(() => onChangeViewReady(true), 200)
     }else{
       console.log(response)
@@ -70,12 +70,8 @@ function BlogView(props) {
           onChangeFormInput(formInputListUpdated);
         });
       }
-      if(mode === "edit")  setTimeout(() =>  getEditedData(formInputListUpdated), 200)
-      else {
-        onChangeForm(blogFormInputsState)
-        setTimeout(() => onChangeViewReady(true), 200)      
-      }
-      // setTimeout(() => onChangeViewReady(true), 200)
+      if(mode === "edit") setTimeout(() =>  getEditedData(formInputListUpdated), 200)
+      else setTimeout(() => onChangeViewReady(true), 200)          
     }
     fetchData()
   },[]);
@@ -184,4 +180,4 @@ function mapStateToProps({ auth }) {
     token: auth.token
   };
 }
-export default connect(mapStateToProps)(withRouter(BlogView));
+export default connect(mapStateToProps)(withRouter(BlogView))
