@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { routes, PATHS } from "../../../../Utils/routes";
@@ -43,4 +43,5 @@ function MenuFull(props) {
     </nav>
   );
 }
-export default connect()(withRouter(MenuFull));
+//export default connect()(withRouter(MenuFull));
+export default withRouter(MenuFull);

@@ -28,7 +28,8 @@ function BlogForm(props) {
           return (
             <SelectInput
               key={index}
-              options={input.options}
+              options={input.options}   
+              value={form[input.fieldName]}           
               onChange={onChangeInput(input.fieldName)}
               {...input.otherProps}
             />

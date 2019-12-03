@@ -12,11 +12,12 @@ import { notifySuccess } from "../../Utils/notifications";
 
 function BlogView(props) {
   const { token } = props;
+  const [viewReady, onChangeViewReady] = useState(false)
   const [form, onChangeForm] = useState(blogFormInputsState);
   const [formInput, onChangeFormInput] = useState(blogFormInputs);
   const mode = props.match.path === "/add" ? "new" : "edit";
-  const blogId = mode == 'edit' ? props.match.params.blogId : null
-
+  const blogId = mode === 'edit' ? props.match.params.blogId : null
+  console.log(token)
   const getList = async listName => {
     var urlName = `Get${listName}`;
     var response = await sendWebRequest(ApiUrlsDict[urlName], "GET", "");
@@ -32,25 +33,48 @@ function BlogView(props) {
     return null
   };
 
-  const getEditedData = async () => {
+  const getEditedData = async (formInput) => {
     var response = await sendWebRequest(ApiUrlsDict.GetBlog.replace(":BlogId", blogId), "GET", "", { Authorization: `Token ${token}`, "Content-Type": "application/json"});
-    console.log(response)
+    if(response.Message === "OK"){
+      const data = response.result
+      let newForm = form
+      newForm.Name = data.Name
+      newForm.BlogId = data.BlogId
+      const listLanguages = formInput.find(x => x.apiUrlName === "LanguagesList").options
+      const listCountries = formInput.find(x => x.apiUrlName === "CountriesList").options
+      newForm.Languages = data.Languages.map((item,_) => {
+        var language =  listLanguages.find(x => x.value === item) 
+        return {label: language.label, value: language.value }
+      }) 
+      newForm.Countries = data.Countries.map((item,index) => {
+        var country = listCountries.find(x => x.value === item) 
+        return {label: country.label, value: country.value }
+      })
+      onChangeForm(newForm)
+      setTimeout(() => onChangeViewReady(true), 200)
+    }else{
+      console.log(response)
+    }
   }
 
   useEffect(() => {
-    const selectInputs = formInput.filter(x => x.inputType === "SelectInput");
-    let formInputListUpdated = formInput
-    if (selectInputs) {
-      selectInputs.forEach(async item => {
-        let listData = await getList(item.apiUrlName);
-        formInputListUpdated = formInputListUpdated.map(x =>
-          x.fieldName === item.fieldName ? { ...x, options: listData } : x
-        );
-        onChangeFormInput(formInputListUpdated);
-      });
+    const fetchData = () => {
+      const selectInputs = formInput.filter(x => x.inputType === "SelectInput");
+      let formInputListUpdated = formInput
+      if (selectInputs) {
+        selectInputs.forEach(async item => {
+          let listData = await getList(item.apiUrlName);
+          formInputListUpdated = formInputListUpdated.map(x =>
+            x.fieldName === item.fieldName ? { ...x, options: listData } : x
+          );
+          onChangeFormInput(formInputListUpdated);
+        });
+      }
+      if(mode === "edit")  setTimeout(() =>  getEditedData(formInputListUpdated), 200)
+      else setTimeout(() => onChangeViewReady(true), 200)
+      // setTimeout(() => onChangeViewReady(true), 200)
     }
-    if(mode === "edit") getEditedData()
-
+    fetchData()
   },[]);
 
   const onChangeInput = fieldName => value => {
@@ -84,7 +108,6 @@ function BlogView(props) {
     objectToSend.Name = form.Name;
     objectToSend.Languages = form.Languages.map((item, id) => item.value);
     objectToSend.Countries = form.Countries.map((item, id) => item.value);
-    console.log(objectToSend);
     const response = await sendWebRequest(
       ApiUrlsDict.CreateBlog,
       "POST",
@@ -104,41 +127,49 @@ function BlogView(props) {
   };
 
   return (
-    <>
-      {token ?         
-        <Grid container direction="row" justify="center" alignItems="center">
-          <Grid item md={3} />
-          <Grid item xs={12} md={6}>
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-              spacing={1}
-            >
-              <BlogForm
-                form={form}
-                formInput={formInput}
-                onChangeInput={onChangeInput}
-                onBlurInput={onBlurInput}
-                onImageChange={onImageChange}
-                {...props}
-              />
+    <>      
+      {token ? 
+        <>
+          {viewReady ?
+            <Grid container direction="row" justify="center" alignItems="center">
+              <Grid item md={3} />
+              <Grid item xs={12} md={6}>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                  spacing={1}
+                >
+                  <BlogForm
+                    form={form}
+                    formInput={formInput}
+                    onChangeInput={onChangeInput}
+                    onBlurInput={onBlurInput}
+                    onImageChange={onImageChange}
+                    {...props}
+                  />
+                </Grid>
+                <Button variant="contained" onClick={sendForm}>
+                  {mode === "new" ? "Add" : "Edit"}
+                </Button>
+                {mode !== "new" && (
+                  <Button variant="contained" onClick={sendForm}>
+                    Delete
+                  </Button>
+                )}
+              </Grid>
+              <Grid item md={3} />
+              {/* <Grid item component={Box} md={6} display={{ xs: "none", md: "block" }}>
+                <span style={{ color: green }}>YY</span>
+              </Grid> */}
             </Grid>
-            <Button variant="contained" onClick={sendForm}>
-              {mode === "new" ? "Add" : "Edit"}
-            </Button>
-            {mode !== "new" && (
-              <Button variant="contained" onClick={sendForm}>
-                Delete
-              </Button>
-            )}
-          </Grid>
-          <Grid item md={3} />
-          {/* <Grid item component={Box} md={6} display={{ xs: "none", md: "block" }}>
-            <span style={{ color: green }}>YY</span>
-          </Grid> */}
-        </Grid>
+            :
+            <span>Loading</span>
+
+          }
+
+        </>
         :
         <Redirect to={PATHS.LOGIN}/>
       }

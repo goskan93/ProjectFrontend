@@ -1,4 +1,5 @@
 export const blogFormInputsState = {
+    BlogId: "",
     Name: "",
     Ins: "",
     YT: "",
@@ -58,6 +59,7 @@ export const blogFormInputsState = {
       inputType: "SelectInput",
       apiUrlName: "CountriesList",
       options: {},
+      value:[],
       fieldName: "Countries",
       otherProps: {}
     },
@@ -65,6 +67,7 @@ export const blogFormInputsState = {
       inputType: "SelectInput",
       apiUrlName: "LanguagesList",
       options: {},
+      value:[],
       fieldName: "Languages",
       otherProps: {}
     },

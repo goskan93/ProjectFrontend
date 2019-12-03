@@ -11,15 +11,19 @@ function ListBlogsUserView(props) {
   const [blogsUser, onChangeBlogsUser] = useState([])
   const {token} = props;
   const hasBlogs = blogsUser.length > 0 
+
   const getList = async () => {
     const response = await sendWebRequest(ApiUrlsDict.GetUserBlogs, "GET", null, { Authorization: `Token ${token}`, "Content-Type": "application/json" });
     if(response.Message === "OK") return response.result
     else return []
   };
 
-  useEffect(async () => {
-    let blogsUser = await getList();
-    onChangeBlogsUser(blogsUser)
+  useEffect( () => {
+    const fetchData = async () => {
+      let blogsUser = await getList();
+      onChangeBlogsUser(blogsUser)
+    }
+    fetchData()
   },[]);
 
   const editBlog = blogId => {
@@ -55,7 +59,7 @@ function ListBlogsUserView(props) {
                 <span>You did not add yet any blog.</span>
               }
               <Grid item xs={12}>
-                <Button variant="contained" onClick={console.log('add')}>
+                <Button variant="contained" onClick={() => null}>
                   Add new
                 </Button>
               </Grid>

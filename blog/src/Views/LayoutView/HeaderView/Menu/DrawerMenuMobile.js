@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -15,45 +15,42 @@ import { logout } from "../../../../Store/Modules/authModule";
 function DrawerMenuMobile(props) {
   const { toggleDrawer, isOpen } = props;
 
-  const menuList = () => (
-    <nav
-      style={{ width: "auto" }}
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <List style={{ color: darkblue, padding: 0 }}>
-        {routes.map((item, index) => {
-          const showLink =
-            item.showInMenu &&
-            ((item.showIfLogIn && props.isLoggedIn) ||
-              (item.showIfLogOut && !props.isLoggedIn));
-          return (
-            showLink && (
-              <React.Fragment key={index}>
-                <ListItem
-                  button
-                  onClick={() =>
-                    item.itemText !== "Logout"
-                      ? props.history.push(item.path)
-                      : props.dispatch(logout())
-                  }
-                >
-                  <ListItemIcon>{item.itemIcon}</ListItemIcon>
-                  <ListItemText primary={item.itemText} />
-                </ListItem>
-                <Divider />
-              </React.Fragment>
-            )
-          );
-        })}
-      </List>
-    </nav>
-  );
-
   return (
     <Drawer anchor="top" open={isOpen} onClose={toggleDrawer(false)}>
-      {menuList()}
+      <nav
+        style={{ width: "auto" }}
+        onClick={toggleDrawer(false)}
+        onKeyDown={toggleDrawer(false)}
+      >
+        <List style={{ color: darkblue, padding: 0 }}>
+          {routes.map((item, index) => {
+            const showLink =
+              item.showInMenu &&
+              ((item.showIfLogIn && props.isLoggedIn) ||
+                (item.showIfLogOut && !props.isLoggedIn));
+            return (
+              showLink && (
+                <React.Fragment key={index}>
+                  <ListItem
+                    button
+                    onClick={() =>
+                      item.itemText !== "Logout"
+                        ? props.history.push(item.path)
+                        : props.dispatch(logout())
+                    }
+                  >
+                    <ListItemIcon>{item.itemIcon}</ListItemIcon>
+                    <ListItemText primary={item.itemText} />
+                  </ListItem>
+                  <Divider />
+                </React.Fragment>
+              )
+            );
+          })}
+        </List>
+      </nav>
     </Drawer>
   );
 }
-export default connect()(withRouter(DrawerMenuMobile));
+// export default connect()(withRouter(DrawerMenuMobile));
+export default withRouter(DrawerMenuMobile);
