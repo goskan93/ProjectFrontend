@@ -107,22 +107,44 @@ function BlogView(props) {
     objectToSend.Name = form.Name;
     objectToSend.Languages = form.Languages.map((item, id) => item.value);
     objectToSend.Countries = form.Countries.map((item, id) => item.value);
-    const response = await sendWebRequest(
-      ApiUrlsDict.CreateBlog,
-      "POST",
-      objectToSend,
-      {
-        Authorization: `Token ${token}`,
-        "Content-Type": "application/json"
+    if(mode === "new"){
+      const response = await sendWebRequest(
+        ApiUrlsDict.CreateBlog,
+        "POST",
+        objectToSend,
+        {
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json"
+        }
+      );
+      if (response.Message === "OK") {
+        props.history.push(PATHS.HOME);
+        notifySuccess(response.result.Message);
+      } else {
+        //TODO: how to show errors from backend
+        console.log(response.result);
       }
-    );
-    if (response.Message === "OK") {
-      props.history.push(PATHS.HOME);
-      notifySuccess(response.result.Message);
-    } else {
-      //TODO: how to show errors from backend
-      console.log(response.result);
     }
+    if(mode === 'edit'){
+      const response = await sendWebRequest(
+        ApiUrlsDict.UpdateBlog.replace(":BlogId", blogId),
+        "PUT",
+        objectToSend,
+        {
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json"
+        }
+      );
+      if (response.Message === "OK") {
+        props.history.push(PATHS.BLOGLIST);
+        notifySuccess("You updated your blog.");
+      } else {
+        //TODO: how to show errors from backend
+        console.log(response.result);
+      }
+    }
+
+
   };
 
   return (

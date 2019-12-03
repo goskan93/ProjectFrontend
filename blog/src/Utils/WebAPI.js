@@ -8,7 +8,7 @@ export const ApiUrlsDict = {
   CreateBlog: `${baseAPI}CreateBlog/`,
   GetUserBlogs: `${baseAPI}GetUsersBlogs/`,
   GetBlog: `${baseAPI}GetBlog/:BlogId`,
-
+  UpdateBlog: `${baseAPI}UpdateBlog/:BlogId`,
   Register: `${authAPI}registration/`,
   Login: `${authAPI}login/`
 };
