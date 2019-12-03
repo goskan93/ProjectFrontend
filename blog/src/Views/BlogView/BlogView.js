@@ -15,7 +15,7 @@ function BlogView(props) {
   const [viewReady, onChangeViewReady] = useState(false)
   const [form, onChangeForm] = useState(blogFormInputsState);
   const [formInput, onChangeFormInput] = useState(blogFormInputs);
-  const mode = props.match.path === "/add" ? "new" : "edit";
+  const mode = props.match.path === PATHS.BLOGADD ? "new" : "edit";
   const blogId = mode === 'edit' ? props.match.params.blogId : null
   console.log(token)
   const getList = async listName => {
@@ -71,7 +71,10 @@ function BlogView(props) {
         });
       }
       if(mode === "edit")  setTimeout(() =>  getEditedData(formInputListUpdated), 200)
-      else setTimeout(() => onChangeViewReady(true), 200)
+      else {
+        onChangeForm(blogFormInputsState)
+        setTimeout(() => onChangeViewReady(true), 200)      
+      }
       // setTimeout(() => onChangeViewReady(true), 200)
     }
     fetchData()

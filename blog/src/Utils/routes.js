@@ -3,7 +3,6 @@ import BlogView from "../Views/BlogView/BlogView";
 import ListBlogsUserView from "../Views/BlogView/ListBlogsUserView";
 import AuthView from "../Views/AuthView/AuthView";
 import Home from "../Views/HomeView/HomeView";
-import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import EditIcon from "@material-ui/icons/Edit";
 import MailIcon from "@material-ui/icons/Mail";
@@ -12,9 +11,9 @@ import ExitToApp from "@material-ui/icons/ExitToApp";
 
 export const PATHS = {
   HOME: "/",
-  ADD: "/add",
-  EDIT: "/edit",
-  EDITBLOG: "/edit/:blogId",
+  BLOGLIST: "/blog",
+  BLOGADD: "/blog/add",
+  BLOGEDIT: "/blog/edit/:blogId",
   SEARCH: "/search",
   CONTACT: "/contact",
   LOGIN: "/login",
@@ -31,23 +30,19 @@ export const routes = [
     showInMenu: true,
     showIfLogIn: true,
     showIfLogOut: false,
-    path: PATHS.ADD,
-    component: BlogView,
-    itemText: "Add",
-    itemIcon: <AddIcon />
-  },
-  {
-    showInMenu: true,
-    showIfLogIn: true,
-    showIfLogOut: false,
-    path: PATHS.EDIT,
+    path: PATHS.BLOGLIST,
     component: ListBlogsUserView,
-    itemText: "Edit",
-    itemIcon: <EditIcon />
+    itemText: "Your Blogs",
+    itemIcon: <EditIcon /> // change
   },
   {
     showInMenu: false,
-    path: PATHS.EDITBLOG,
+    path: PATHS.BLOGADD,
+    component: BlogView,
+  },
+  {
+    showInMenu: false,
+    path: PATHS.BLOGEDIT,
     component: BlogView,
   },
   {

@@ -28,7 +28,7 @@ function ListBlogsUserView(props) {
 
   const editBlog = blogId => {
     //go to edit view get data
-    props.history.push(`edit/${blogId}`)
+    props.history.push(PATHS.BLOGEDIT.replace(":blogId", blogId))
   }
 
   return (
@@ -59,7 +59,7 @@ function ListBlogsUserView(props) {
                 <span>You did not add yet any blog.</span>
               }
               <Grid item xs={12}>
-                <Button variant="contained" onClick={() => null}>
+                <Button variant="contained" onClick={() => props.history.push(PATHS.BLOGADD)}>
                   Add new
                 </Button>
               </Grid>
