@@ -1,37 +1,45 @@
 import React, {useState, useEffect} from "react";
-import { blogFormInputs } from "./blogForm"; 
+import { blogFormInputs } from "../../Utils/blogForm"; 
 import { getList } from "../../Utils/utils";
 import { SelectInput, CheckBoxInput} from "../../Components";
 
 function SearchFields(props) {
-  const {onChangeInput} = props
+  const {onChangeInput, values} = props
+  const [viewReady, onChangeViewReady] = useState(false)
   const [list, onUpdateList] = useState(state)
   const selectInputs = blogFormInputs.filter(x => x.inputType === "SelectInput");
 
   useEffect(() => {
     const fetchLists = () => {
+      let updatedList = list
       if (selectInputs) {
         selectInputs.forEach(async item => {
           let listData = await getList(item.apiUrlName);
-          onUpdateList({...list, [item.apiUrlName]: listData});
+          updatedList[item.apiUrlName] = listData
         });
+        onUpdateList(updatedList);
       }          
     }
     fetchLists()
+    setTimeout(() => onChangeViewReady(true), 300)
   },[]);
 
   return (
     <>
-      <SelectInput
-        options={list.LanguagesList}   
-        onChange={onChangeInput('Languages')}
-        {...input.otherProps}
-      />
-      <SelectInput
-        options={input.options}   
-        onChange={onChangeInput('Countries')}
-        {...input.otherProps}
-      />
+    {viewReady &&
+      <>
+        <SelectInput
+          options={list.LanguagesList}   
+          value={values.Languages}
+          onChange={onChangeInput('Languages')}
+        />
+        <SelectInput
+          options={list.CountriesList}   
+          value={values.Countries}
+          onChange={onChangeInput('Countries')}
+        />
+      </>
+    }
     </>
   );
 }

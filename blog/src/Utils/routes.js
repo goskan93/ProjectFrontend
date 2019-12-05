@@ -3,6 +3,7 @@ import BlogView from "../Views/BlogView/BlogView";
 import ListBlogsUserView from "../Views/BlogView/ListBlogsUserView";
 import AuthView from "../Views/AuthView/AuthView";
 import Home from "../Views/HomeView/HomeView";
+import SearchView from "../Views/SearchView/SearchView";
 import SearchIcon from "@material-ui/icons/Search";
 import EditIcon from "@material-ui/icons/Edit";
 import MailIcon from "@material-ui/icons/Mail";
@@ -50,7 +51,7 @@ export const routes = [
     showIfLogIn: true,
     showIfLogOut: true,
     path: PATHS.SEARCH,
-    component: Home,
+    component: SearchView,
     itemText: "Search",
     itemIcon: <SearchIcon />
   },
