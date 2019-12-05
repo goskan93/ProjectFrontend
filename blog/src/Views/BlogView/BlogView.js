@@ -9,6 +9,7 @@ import { blogFormInputs, blogFormInputsState } from "../../Utils/blogForm"; //bl
 import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
 import { PATHS } from "../../Utils/routes";
 import { notifySuccess } from "../../Utils/notifications";
+import { getList } from "../../Utils/utils";
 
 function BlogView(props) {
   const { token } = props;
@@ -17,23 +18,9 @@ function BlogView(props) {
   const [formInput, onChangeFormInput] = useState(blogFormInputs);
   const mode = props.match.path === PATHS.BLOGADD ? "new" : "edit";
   const blogId = mode === 'edit' ? props.match.params.blogId : null
-  
-  const getList = async listName => {
-    var urlName = `Get${listName}`;
-    var response = await sendWebRequest(ApiUrlsDict[urlName], "GET", "");
-    if(response.result.length > 0){
-      var listData = response.result.map(item => {
-        return {
-          label: item.name,
-          value: item.id
-        };
-      });
-      return listData;
-    }
-    return null
-  };
 
   const getEditedData = async (formInput) => {
+    //TODO: Take data better way
     var response = await sendWebRequest(ApiUrlsDict.GetBlog.replace(":BlogId", blogId), "GET", "", { Authorization: `Token ${token}`, "Content-Type": "application/json"});
     if(response.Message === "OK"){
       const data = response.result
@@ -108,15 +95,7 @@ function BlogView(props) {
     objectToSend.Languages = form.Languages.map((item, id) => item.value);
     objectToSend.Countries = form.Countries.map((item, id) => item.value);
     if(mode === "new"){
-      const response = await sendWebRequest(
-        ApiUrlsDict.CreateBlog,
-        "POST",
-        objectToSend,
-        {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json"
-        }
-      );
+      const response = await sendWebRequest(ApiUrlsDict.CreateBlog,"POST",objectToSend,{Authorization: `Token ${token}`, "Content-Type": "application/json"});
       if (response.Message === "OK") {
         props.history.push(PATHS.HOME);
         notifySuccess(response.result.Message);
@@ -126,15 +105,7 @@ function BlogView(props) {
       }
     }
     if(mode === 'edit'){
-      const response = await sendWebRequest(
-        ApiUrlsDict.UpdateBlog.replace(":BlogId", blogId),
-        "PUT",
-        objectToSend,
-        {
-          Authorization: `Token ${token}`,
-          "Content-Type": "application/json"
-        }
-      );
+      const response = await sendWebRequest(ApiUrlsDict.UpdateBlog.replace(":BlogId", blogId),"PUT", objectToSend,{Authorization: `Token ${token}`,"Content-Type": "application/json"});
       if (response.Message === "OK") {
         props.history.push(PATHS.BLOGLIST);
         notifySuccess("You updated your blog.");
@@ -143,8 +114,6 @@ function BlogView(props) {
         console.log(response.result);
       }
     }
-
-
   };
 
   return (
@@ -181,9 +150,6 @@ function BlogView(props) {
                 )}
               </Grid>
               <Grid item md={3} />
-              {/* <Grid item component={Box} md={6} display={{ xs: "none", md: "block" }}>
-                <span style={{ color: green }}>YY</span>
-              </Grid> */}
             </Grid>
             :
             <span>Loading</span>
