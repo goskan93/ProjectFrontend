@@ -1,15 +1,15 @@
 export const blogFormInputsState = {
     BlogId: "",
     Name: "",
-    Ins: "",
-    YT: "",
-    WWW: "",
-    FB: "",
+    Instagram: "",
+    Youtube: "",
+    Website: "",
+    Facebook: "",
     Countries: [],
     Languages: [],
-    Trips: false,
-    Animals: false,
-    Children: false,
+    flaOrganizeTrips: false,
+    flaTravelWithAnimals: false,
+    flaTravelWithChildren: false,
     About: "",
     Photo: ""
   };
@@ -26,33 +26,33 @@ export const blogFormInputsState = {
     {
       inputType: "TextInput",
       label: "Ins",
-      fieldName: "Ins",
+      fieldName: "Instagram",
       error: false,
-      helperText: ["", ""],
+      helperText: ["Only your user nickname.", ""],
       otherProps: { md: 6 }
     },
     {
       inputType: "TextInput",
       label: "YT",
-      fieldName: "YT",
+      fieldName: "Youtube",
       error: false,
-      helperText: ["", ""],
+      helperText: ["Url to your channel (ex. https://www.youtube.com/channel/id_of_your_channel).", ""],
       otherProps: { md: 6 }
     },
     {
       inputType: "TextInput",
       label: "WWW",
-      fieldName: "WWW",
+      fieldName: "Website",
       error: false,
-      helperText: ["", ""],
+      helperText: ["Url to your website. (ex. http(s)://www.blogexample.com)", ""],
       otherProps: { md: 6 }
     },
     {
       inputType: "TextInput",
       label: "FB",
-      fieldName: "FB",
+      fieldName: "Facebook",
       error: false,
-      helperText: ["", ""],
+      helperText: ["Only your nickname.", ""],
       otherProps: { md: 6 }
     },
     {
@@ -74,19 +74,19 @@ export const blogFormInputsState = {
     {
       inputType: "CheckBoxInput",
       label: "Make Trips",
-      fieldName: "Trips",
+      fieldName: "flaOrganizeTrips",
       otherProps: { xs: 6, md: 6 }
     },
     {
       inputType: "CheckBoxInput",
       label: "Animals",
-      fieldName: "Animals",
+      fieldName: "flaTravelWithAnimals",
       otherProps: { xs: 6, md: 6 }
     },
     {
       inputType: "CheckBoxInput",
       label: "Children",
-      fieldName: "Children",
+      fieldName: "flaTravelWithChildren",
       otherProps: {}
     },
     {

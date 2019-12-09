@@ -2,13 +2,14 @@ const baseAPI = "http://127.0.0.1:8000/api/";
 const authAPI = "http://127.0.0.1:8000/rest-auth/";
 
 export const ApiUrlsDict = {
-  GetBlogList: `${baseAPI}GetBlogList/`,
+  // GetBlogList: `${baseAPI}GetBlogList/`,
   GetLanguagesList: `${baseAPI}GetLanguagesList/`,
   GetCountriesList: `${baseAPI}GetCountriesList/`,
   CreateBlog: `${baseAPI}CreateBlog/`,
   GetUserBlogs: `${baseAPI}GetUsersBlogs/`,
   GetBlog: `${baseAPI}GetBlog/:BlogId`,
   UpdateBlog: `${baseAPI}UpdateBlog/:BlogId`,
+  DeleteBlog: `${baseAPI}DeleteBlog/BlogId`,
   Register: `${authAPI}registration/`,
   Login: `${authAPI}login/`
 };

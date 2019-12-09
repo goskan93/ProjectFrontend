@@ -24,20 +24,18 @@ function BlogView(props) {
     var response = await sendWebRequest(ApiUrlsDict.GetBlog.replace(":BlogId", blogId), "GET", "", { Authorization: `Token ${token}`, "Content-Type": "application/json"});
     if(response.Message === "OK"){
       const data = response.result
-      let newForm = {}
-      newForm.Name = data.Name
-      newForm.BlogId = data.BlogId
+      let newLists = {}
       const listLanguages = formInput.find(x => x.apiUrlName === "LanguagesList").options
       const listCountries = formInput.find(x => x.apiUrlName === "CountriesList").options
-      newForm.Languages = data.Languages.map((item,_) => {
+      newLists.Languages = data.Languages.map((item,_) => {
         var language =  listLanguages.find(x => x.value === item) 
         return {label: language.label, value: language.value }
       }) 
-      newForm.Countries = data.Countries.map((item,index) => {
+      newLists.Countries = data.Countries.map((item,index) => {
         var country = listCountries.find(x => x.value === item) 
         return {label: country.label, value: country.value }
       })
-      onChangeForm({...form, ...newForm})
+      onChangeForm({...form, ...data, ...newLists})
       setTimeout(() => onChangeViewReady(true), 200)
     }else{
       console.log(response)
@@ -57,7 +55,7 @@ function BlogView(props) {
           onChangeFormInput(formInputListUpdated);
         });
       }
-      if(mode === "edit") setTimeout(() =>  getEditedData(formInputListUpdated), 200)
+      if(mode === "edit") setTimeout(() => getEditedData(formInputListUpdated), 200)
       else setTimeout(() => onChangeViewReady(true), 200)          
     }
     fetchData()
@@ -90,31 +88,34 @@ function BlogView(props) {
 
   const sendForm = async () => {
     //TODO: validate
-    const objectToSend = {};
-    objectToSend.Name = form.Name;
-    objectToSend.Languages = form.Languages.map((item, id) => item.value);
-    objectToSend.Countries = form.Countries.map((item, id) => item.value);
-    if(mode === "new"){
-      const response = await sendWebRequest(ApiUrlsDict.CreateBlog,"POST",objectToSend,{Authorization: `Token ${token}`, "Content-Type": "application/json"});
-      if (response.Message === "OK") {
-        props.history.push(PATHS.HOME);
-        notifySuccess(response.result.Message);
-      } else {
-        //TODO: how to show errors from backend
-        console.log(response.result);
-      }
-    }
-    if(mode === 'edit'){
-      const response = await sendWebRequest(ApiUrlsDict.UpdateBlog.replace(":BlogId", blogId),"PUT", objectToSend,{Authorization: `Token ${token}`,"Content-Type": "application/json"});
-      if (response.Message === "OK") {
-        props.history.push(PATHS.BLOGLIST);
-        notifySuccess("You updated your blog.");
-      } else {
-        //TODO: how to show errors from backend
-        console.log(response.result);
-      }
+    const objectToSend = {...form};
+    delete objectToSend.Languages;
+    delete objectToSend.Countries;
+    delete objectToSend.BlogId;
+    objectToSend.Languages = form.Languages.map((item, _) => item.value);
+    objectToSend.Countries = form.Countries.map((item, _) => item.value);
+    const url = mode === 'new' ? ApiUrlsDict.CreateBlog : ApiUrlsDict.UpdateBlog.replace(":BlogId", blogId)
+    const method = mode === 'new' ? "POST" : "PUT"
+    const response = await sendWebRequest(url,method,objectToSend,{Authorization: `Token ${token}`, "Content-Type": "application/json"});
+    if(response.Message == "OK"){
+      const path = mode === 'new' ? PATHS.HOME : PATHS.BLOGLIST;
+      props.history.push(path);
+      notifySuccess(response.result.Message ? response.result.Message : "You updated your blog.");
+    }else {
+      console.log(response.result);
     }
   };
+
+
+  const deleteBlog = async () => {
+    const response = await sendWebRequest(ApiUrlsDict.DeleteBlog.replace(":BlogId", blogId),'DELETE',"",{Authorization: `Token ${token}`, "Content-Type": "application/json"});
+    if(response.Message == "OK"){
+      props.history.push(PATHS.BLOGLIST);
+      notifySuccess("You deleted your blog.");
+    }else {
+      console.log(response.result);
+    }
+  }
 
   return (
     <>      
@@ -144,7 +145,7 @@ function BlogView(props) {
                   {mode === "new" ? "Add" : "Edit"}
                 </Button>
                 {mode !== "new" && (
-                  <Button variant="contained" onClick={sendForm}>
+                  <Button variant="contained" onClick={deleteBlog}>
                     Delete
                   </Button>
                 )}
