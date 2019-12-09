@@ -31,7 +31,7 @@ function SearchFields(props) {
         <SelectInput
           options={list.LanguagesList}   
           value={values.Languages}
-          onChange={onChangeInput('Languages')}
+          onChange={onChangeInput('Languages')}          
         />
         <SelectInput
           options={list.CountriesList}   

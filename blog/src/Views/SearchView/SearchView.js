@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, Suspense, lazy} from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import SearchFields from './SearchFields'
 import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
+
+const SearchBlogListResults = lazy(() => import('./SearchBlogListResults'));
 
 function SearchView(props) {
   const [filters, onUpdateFilters] = useState(state)
@@ -36,14 +38,24 @@ function SearchView(props) {
 
   return (
     <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
-      <Grid item md={3} />
-      <Grid item xs={12} md={6}>
-        <SearchFields onChangeInput={onChangeInput} values={filters}/>
-        <Button variant="contained" onClick={onClickSearch}>
-          Search
-        </Button>
+      <Grid item xs={12}>
+        <Grid container direction="row" justify="center" alignItems="center" spacing={1}>
+          <Grid item md={3}/>
+          <Grid item xs={12} md={6}>
+            <SearchFields onChangeInput={onChangeInput} values={filters}/>
+          </Grid>
+          <Grid item md={3}/>
+          <Grid item xs={12}>
+            <Button variant="contained" onClick={onClickSearch}>Search</Button>            
+          </Grid>
+          <Grid item md={3}/>
+        </Grid>
+        {listBlogs.length > 0 &&
+          <Suspense fallback={<div>Loading...</div>}>
+            <SearchBlogListResults listBlogs={listBlogs}/>
+          </Suspense>
+        }
       </Grid>
-      <Grid item md={3} />
     </Grid>
   );
 }
