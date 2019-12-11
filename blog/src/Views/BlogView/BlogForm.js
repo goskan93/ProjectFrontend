@@ -1,10 +1,12 @@
 import React from "react";
+import Grid from "@material-ui/core/Grid";
 import {
   TextInput,
   SelectInput,
   CheckBoxInput,
   ImageUpload
 } from "../../Components";
+
 
 function BlogForm(props) {
   const { formInput, form, onChangeInput, onBlurInput, onImageChange } = props;
@@ -31,6 +33,7 @@ function BlogForm(props) {
               options={input.options}   
               value={form[input.fieldName]}           
               onChange={onChangeInput(input.fieldName)}
+              helperText={input.helperText}              
               {...input.otherProps}
             />
           );
@@ -46,7 +49,9 @@ function BlogForm(props) {
           );
         } else return <></>;
       })}
-      <ImageUpload handleImageChange={onImageChange()} />
+      <Grid item xs={12}>
+        <ImageUpload handleImageChange={onImageChange()} />
+      </Grid>
     </>
   );
 }

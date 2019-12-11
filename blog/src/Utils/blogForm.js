@@ -21,7 +21,7 @@ export const blogFormInputsState = {
       label: "Name",
       fieldName: "Name",
       error: false,
-      helperText: ["Text1", "Text2"],
+      helperText: ["", ""],
       otherProps: {}
     },
     {
@@ -45,7 +45,7 @@ export const blogFormInputsState = {
       label: "WWW",
       fieldName: "Website",
       error: false,
-      helperText: ["Url to your website. (ex. http(s)://www.blogexample.com)", ""],
+      helperText: ["Url to your website.", ""],
       otherProps: { md: 6 }
     },
     {
@@ -62,7 +62,8 @@ export const blogFormInputsState = {
       options: {},
       value:[],
       fieldName: "Countries",
-      otherProps: {}
+      otherProps: {},
+      helperText: "Countries that information can be found on your blog."
     },
     {
       inputType: "SelectInput",
@@ -70,23 +71,24 @@ export const blogFormInputsState = {
       options: {},
       value:[],
       fieldName: "Languages",
-      otherProps: {}
+      otherProps: {},
+      helperText: "Languages that you writing your blog with."
     },
     {
       inputType: "CheckBoxInput",
-      label: "Make Trips",
+      label: "Organize Trips",
       fieldName: "flaOrganizeTrips",
       otherProps: { xs: 6, md: 6 }
     },
     {
       inputType: "CheckBoxInput",
-      label: "Animals",
+      label: "Travel with Animals",
       fieldName: "flaTravelWithAnimals",
       otherProps: { xs: 6, md: 6 }
     },
     {
       inputType: "CheckBoxInput",
-      label: "Children",
+      label: "Travel with Children",
       fieldName: "flaTravelWithChildren",
       otherProps: {}
     },

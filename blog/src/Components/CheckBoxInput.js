@@ -3,6 +3,18 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { withStyles } from '@material-ui/core/styles';
+import {green, pink} from '../Utils/colors'
+
+const CustomCheckBox = withStyles({
+  root: {
+    color: green,
+    '&$checked': {
+      color: pink,
+    },
+  },
+  checked: {},
+})(Checkbox);
 
 export default function CheckBoxInput(props) {
   const { checked, onChange, value, label, xs, md } = props;
@@ -11,7 +23,7 @@ export default function CheckBoxInput(props) {
       <Grid container>
         <FormControlLabel
           control={
-            <Checkbox
+            <CustomCheckBox
               checked={checked}
               value={value}
               onChange={e => onChange(e.target.checked)}

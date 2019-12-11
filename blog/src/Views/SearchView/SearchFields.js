@@ -31,12 +31,14 @@ function SearchFields(props) {
         <SelectInput
           options={list.LanguagesList}   
           value={values.Languages}
-          onChange={onChangeInput('Languages')}          
+          onChange={onChangeInput('Languages')}      
+          helperTextStyle={{marginTop:0}}    
         />
         <SelectInput
           options={list.CountriesList}   
           value={values.Countries}
           onChange={onChangeInput('Countries')}
+          helperTextStyle={{marginTop:0, minHeight:0}}    
         />
       </>
     }

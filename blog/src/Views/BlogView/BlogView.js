@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { withRouter } from "react-router-dom";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import BlogForm from "./BlogForm";
 import { blogFormInputs, blogFormInputsState } from "../../Utils/blogForm"; //blogFormInputsState
@@ -10,6 +9,7 @@ import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
 import { PATHS } from "../../Utils/routes";
 import { notifySuccess } from "../../Utils/notifications";
 import { getList } from "../../Utils/utils";
+import CustomButton from "../../Components/CustomButton";
 
 function BlogView(props) {
   const { token } = props;
@@ -31,7 +31,7 @@ function BlogView(props) {
         var language =  listLanguages.find(x => x.value === item) 
         return {label: language.label, value: language.value }
       }) 
-      newLists.Countries = data.Countries.map((item,index) => {
+      newLists.Countries = data.Countries.map((item,_) => {
         var country = listCountries.find(x => x.value === item) 
         return {label: country.label, value: country.value }
       })
@@ -69,10 +69,10 @@ function BlogView(props) {
     //TODO: validation
     //here validate inputs
     //find element with this field name
-    const formInputUpdated = formInput.map(x =>
-      x.fieldName === fieldName ? { ...x, error: !x.error } : x
-    );
-    onChangeFormInput(formInputUpdated);
+    // const formInputUpdated = formInput.map(x =>
+    //   x.fieldName === fieldName ? { ...x, error: !x.error } : x
+    // );
+    // onChangeFormInput(formInputUpdated);
   };
 
   const onImageChange = () => e => {
@@ -145,13 +145,13 @@ function BlogView(props) {
                     {...props}
                   />
                 </Grid>
-                <Button variant="contained" onClick={sendForm}>
+                <CustomButton variant="contained" onClick={sendForm}>
                   {mode === "new" ? "Add" : "Edit"}
-                </Button>
+                </CustomButton>
                 {mode !== "new" && (
-                  <Button variant="contained" onClick={deleteBlog}>
+                  <CustomButton variant="contained" onClick={deleteBlog}>
                     Delete
-                  </Button>
+                  </CustomButton>
                 )}
               </Grid>
               <Grid item md={3} />

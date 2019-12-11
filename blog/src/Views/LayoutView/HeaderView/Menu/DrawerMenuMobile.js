@@ -7,7 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { darkgreen } from "../../../../Utils/colors";
+import { darkgreen, pink, green } from "../../../../Utils/colors";
 import { routes } from "../../../../Utils/routes";
 import { logout } from "../../../../Store/Modules/authModule";
 
@@ -39,7 +39,7 @@ function DrawerMenuMobile(props) {
                         : props.dispatch(logout())
                     }
                   >
-                    <ListItemIcon>{item.itemIcon}</ListItemIcon>
+                    <ListItemIcon style={{color:pink}}>{item.itemIcon}</ListItemIcon>
                     <ListItemText primary={item.itemText} />
                   </ListItem>
                   <Divider />

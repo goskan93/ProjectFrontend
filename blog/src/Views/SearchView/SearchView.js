@@ -1,8 +1,8 @@
 import React, {useState, useEffect, Suspense, lazy} from "react";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import SearchFields from './SearchFields'
 import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
+import CustomButton from "../../Components/CustomButton";
 
 const SearchBlogListResults = lazy(() => import('./SearchBlogListResults'));
 
@@ -46,7 +46,7 @@ function SearchView(props) {
           </Grid>
           <Grid item md={3}/>
           <Grid item xs={12}>
-            <Button variant="contained" onClick={onClickSearch}>Search</Button>            
+            <CustomButton variant="contained" onClick={onClickSearch}>Search</CustomButton>            
           </Grid>
           <Grid item md={3}/>
         </Grid>

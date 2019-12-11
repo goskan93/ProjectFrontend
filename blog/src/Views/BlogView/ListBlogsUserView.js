@@ -2,9 +2,9 @@ import React, { useEffect, useState} from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Redirect } from "react-router";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { PATHS } from "../../Utils/routes";
+import CustomButton from "../../Components/CustomButton";
 import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
 
 function ListBlogsUserView(props) {
@@ -59,9 +59,9 @@ function ListBlogsUserView(props) {
                 <span>You did not add yet any blog.</span>
               }
               <Grid item xs={12}>
-                <Button variant="contained" onClick={() => props.history.push(PATHS.BLOGADD)}>
+                <CustomButton variant="contained" onClick={() => props.history.push(PATHS.BLOGADD)}>
                   Add new
-                </Button>
+                </CustomButton>
               </Grid>
             </Grid>             
           </Grid>
