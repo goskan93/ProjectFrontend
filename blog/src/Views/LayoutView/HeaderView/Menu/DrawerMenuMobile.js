@@ -7,7 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { darkblue } from "../../../../Utils/colors";
+import { darkgreen } from "../../../../Utils/colors";
 import { routes } from "../../../../Utils/routes";
 import { logout } from "../../../../Store/Modules/authModule";
 
@@ -22,7 +22,7 @@ function DrawerMenuMobile(props) {
         onClick={toggleDrawer(false)}
         onKeyDown={toggleDrawer(false)}
       >
-        <List style={{ color: darkblue, padding: 0 }}>
+        <List style={{ color: darkgreen, padding: 0 }}>
           {routes.map((item, index) => {
             const showLink =
               item.showInMenu &&

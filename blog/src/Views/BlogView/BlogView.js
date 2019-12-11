@@ -76,14 +76,19 @@ function BlogView(props) {
   };
 
   const onImageChange = () => e => {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    //check file length to not be too big
-    reader.onloadend = () => {
-      onChangeForm({ ...form, PhotoUrl: reader.result });
-      onChangeForm({ ...form, PhotoFile: file });
-    };
+    const file = e.target.files[0];
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          resolve(event.target.result);
+        };
+        reader.onerror = (err) => {
+          reject(err);
+        };
+        reader.readAsBinaryString(file);
+        console.log(reader)
+    });
+
   };
 
   const sendForm = async () => {
@@ -105,7 +110,6 @@ function BlogView(props) {
       console.log(response.result);
     }
   };
-
 
   const deleteBlog = async () => {
     const response = await sendWebRequest(ApiUrlsDict.DeleteBlog.replace(":BlogId", blogId),'DELETE',"",{Authorization: `Token ${token}`, "Content-Type": "application/json"});

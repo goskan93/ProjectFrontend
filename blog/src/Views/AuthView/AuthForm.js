@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { TextInput } from "../../Components";
 
 function AuthForm(props) {
@@ -15,7 +15,7 @@ function AuthForm(props) {
                 onChange={value => onChangeInput(input.fieldName, value)}
                 onBlur={value => onBlurInput(input.fieldName)}
                 error={input.error}
-                helperText={input.error ? input.helperText : ""}
+                helperText={input.error ? input.helperText : ""}           
                 {...input.otherProps}
               />
             }

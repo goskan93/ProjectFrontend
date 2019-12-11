@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect, createRef, Fragment} from 'react';
 import Grid from "@material-ui/core/Grid";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -21,6 +21,32 @@ import logo from '../images/images.jpeg'
 function BlogCard(props){
   const {blog} = props
   const [expanded, setExpanded] = useState(false);
+  const actionsItems = [
+    {
+      itemName: 'Facebook',
+      itemIcon: <FacebookIcon style={{color:'#4267B2'}}/>,
+      itemLabel: 'facebook',
+      itemUrl: `www.facebook.com/${blog.Facebook}/`    
+    },
+    {
+      itemName: 'Instagram',
+      itemIcon: <InstagramIcon style={{color:'#8a3ab9'}}/>,
+      itemLabel: 'instagram',
+      itemUrl: `www.instagram.com/${blog.Instagram}/`
+    },
+    {
+      itemName: 'Youtube',
+      itemIcon: <YouTubeIcon style={{color:'#FF0000'}}/>,
+      itemLabel: 'youtube',
+      itemUrl: `www.youtube.com/${blog.Youtube}/`
+    },
+    {
+      itemName: 'Website',
+      itemIcon: <LanguageIcon style={{color:'#008B00'}}/>,
+      itemLabel: 'website',
+      itemUrl: `${blog.Website}`
+    },
+  ]
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -29,74 +55,44 @@ function BlogCard(props){
   return(
     <Card>
       <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={1}>
-        <Grid item xs={5}>
-          <CardMedia
-            style={{height:127, padding:20}}
-            image={logo}
-            title={blog.Name}
-          />
+        <Grid item xs={5} >
+          <CardMedia style={{height:160}} image={logo} title={blog.Name}/>
         </Grid>
-        <Grid item xs={7}>
-          <CardHeader
-            title={blog.Name}
-            style={{paddingTop:16, paddingBottom:8}}
-          />
+        <Grid item xs={7} >
+          <CardHeader title={blog.Name} style={{paddingTop:16, paddingBottom:8, fontSize:'1rem'}}/>
           <CardContent>
-            <Grid container direction="row" alignItems="flex-start" justify="flex-start" alignContent="flex-start" spacing={1}>
-              {blog.flaOrganizeTrips &&
-                <>
-                  <Grid item xs={1}>
-                    <CheckIcon/>
-                  </Grid>
-                  <Grid item xs={5} alignContent="flex-start">
-                    <Typography variant="body2" style={{textAlign:"start"}} >Organize Trips</Typography>
-                  </Grid>
-                </>
-              }
-              {blog.flaTravelWithAnimals &&
-                <>
-                  <Grid item xs={1}>
-                    <CheckIcon/>
-                  </Grid>
-                  <Grid item xs={5}>
-                    <Typography variant="body2" style={{textAlign: "start"}}>Travel with animals</Typography>
-                  </Grid>
-                </>
-              }
-              {blog.flaTravelWithChildren &&
-                <>
-                  <Grid item xs={1}>
-                    <CheckIcon/>
-                  </Grid>
-                  <Grid item xs={5}>
-                    <Typography variant="body2" style={{textAlign: "start"}}>Travel with children</Typography>
-                  </Grid>
-                </>
-              }
+            <Grid container direction="row" alignItems="flex-start" justify="flex-start" spacing={1}>
+              {contentItems.map((item, id) => {
+                return(
+                  <Fragment key={id}>
+                    {blog[item.itemName] &&
+                      <>
+                        <Grid item xs={1}>
+                          <CheckIcon/>
+                        </Grid>
+                        <Grid item xs={5}>
+                          <Typography variant="body2" style={{textAlign:"start"}} >{item.itemTitle}</Typography>
+                        </Grid>
+                      </>
+                    }
+                  </Fragment>
+                )
+              })}
             </Grid>
           </CardContent>
           <Divider/>
           <CardActions style={{padding:2}}>
-            {blog.Facebook &&
-              <IconButton aria-label="facebook">
-                <FacebookIcon style={{color:'#4267B2'}}/>
-              </IconButton>            
-            }
-            {blog.Instagram &&
-              <IconButton aria-label="instagram">
-                <InstagramIcon style={{color:'#8a3ab9'}}/>
-              </IconButton>            
-            }
-            {blog.Youtube &&
-              <IconButton aria-label="youtube">
-                <YouTubeIcon style={{color:'#FF0000'}}/>
-              </IconButton>            
-            }
-            {blog.Youtube &&
-              <IconButton aria-label="website">
-                <LanguageIcon style={{color:'#008B00'}}/>
-              </IconButton>            
-            }
+            {actionsItems.map((item, id) => {
+              return(
+                <Fragment key={id}>
+                  {blog[item.itemName] &&
+                    <IconButton title={item.itemUrl} onClick={() => window.open(item.itemUrl)}>
+                      {item.itemIcon}
+                    </IconButton>  
+                  }
+                </Fragment>
+              )
+            })}
             {blog.About &&
               <IconButton
                 style={{marginLeft: 'auto'}}
@@ -111,9 +107,7 @@ function BlogCard(props){
       </Grid>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent style={{padding:16}}>
-          <Typography style={{textAlign: "start"}}>
-            {blog.About}
-          </Typography>
+          <Typography style={{textAlign: "start"}}>{blog.About}</Typography>
         </CardContent>
       </Collapse>
     </Card>
@@ -122,4 +116,19 @@ function BlogCard(props){
 
 }
 export default BlogCard;
+
+const contentItems = [
+  {
+    itemName: 'flaOrganizeTrips',
+    itemTitle: 'Organize Trips'
+  },
+  {
+    itemName: 'flaTravelWithAnimals',
+    itemTitle: 'Travel with animals'
+  },
+  {
+    itemName: 'flaTravelWithChildren',
+    itemTitle: 'Travel with children'
+  },
+]
 

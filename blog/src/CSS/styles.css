@@ -12,18 +12,18 @@
     font-family: "Bangers", helvetica, sans-serif, cursive;
     font-size: 25px;
     padding: 20px;
-    color: #8ee4af;
+    color: #0E6973;
     text-decoration: none;
   }
   
   .navbar a.active-link {
-    color: #f6c0d1;
+    color: #BF214B;
   }
   
   .navbar a:hover {
     -webkit-transform: scale(1.2);
     -moz-transform: scale(1.2);
     -o-transform: scale(1.2);
-    color: #f6c0d1;
+    color: #BF214B;
   }
   

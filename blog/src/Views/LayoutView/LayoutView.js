@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Header from "./HeaderView/HeaderView";
 // import Footer from "./FooterView/FooterView";
-import { darkgreen } from "../../Utils/colors";
+import { background } from "../../Utils/colors";
 import { useWindowSize } from "../../Utils/window-size";
 
 function Layout(props) {
@@ -12,7 +12,7 @@ function Layout(props) {
     <div
       className="App"
       style={{
-        backgroundColor: darkgreen,
+        backgroundColor: background,
         minHeight: windowHeight
       }}
     >

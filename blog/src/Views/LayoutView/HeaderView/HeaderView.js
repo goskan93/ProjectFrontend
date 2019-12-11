@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "./Menu/Menu";
-import { lightpink } from "../../../Utils/colors";
+import { darkgreen } from "../../../Utils/colors";
 
 function Header(props) {
   return (
@@ -13,7 +13,7 @@ function Header(props) {
         padding: 20
       }}
     >
-      <span className="logo" style={{ color: lightpink, alignSelf: "center" }}>
+      <span className="logo" style={{ color: darkgreen, alignSelf: "center" }}>
         LOGO
       </span>
         <Menu {...props} />

@@ -1,3 +1,4 @@
+//https://www.instagram.com/goskan93/?__a=1 API
 export const blogFormInputsState = {
     BlogId: "",
     Name: "",
@@ -28,7 +29,7 @@ export const blogFormInputsState = {
       label: "Ins",
       fieldName: "Instagram",
       error: false,
-      helperText: ["Only your user nickname.", ""],
+      helperText: ["Only your nickname.", ""],
       otherProps: { md: 6 }
     },
     {
@@ -36,7 +37,7 @@ export const blogFormInputsState = {
       label: "YT",
       fieldName: "Youtube",
       error: false,
-      helperText: ["Url to your channel (ex. https://www.youtube.com/channel/id_of_your_channel).", ""],
+      helperText: ["Only your nickname.", ""],
       otherProps: { md: 6 }
     },
     {

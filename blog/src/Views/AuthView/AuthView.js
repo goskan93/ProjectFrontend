@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import { makeStyles } from '@material-ui/core/styles';
 import {
   authFormInputs,
   authFormInputsState,
@@ -17,12 +18,24 @@ import { login } from "../../Store/Modules/authModule";
 import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
 import { notifySuccess, notifyError } from "../../Utils/notifications";
 import { PATHS } from "../../Utils/routes";
+import { darkpink } from "../../Utils/colors";
+
+const useStyles  = makeStyles({
+  root: {
+    margin:5,
+    background: 'linear-gradient(20deg, #0E7373 10%, #EDF5E1 90%)', 
+    '&:hover': {
+      background: 'linear-gradient(20deg, #EDF5E1 10%, #BF214B 90%)',
+    },
+  },
+});
+
 
 function AuthView(props) {
   const [authForm, onChangeForm] = useState(authFormInputsState);
   const [formInputs, onChangeFormInputs] = useState(authFormInputs);
   const [errorMsg, showErrorMsg] = useState("");
-
+  const classes = useStyles ();
   // const notifySuccess = () => toast.success("Login successfully!");
   // const notifyError = errMsg => toast.error(errMsg);
 
@@ -110,7 +123,7 @@ function AuthView(props) {
           formInputs={formInputs}
           form={authForm}
         />
-        <Button variant="contained" onClick={onSubmitForm}>
+        <Button variant="contained" onClick={onSubmitForm} className={classes.root}>
           {authForm.actionType}
         </Button>
         {Object.keys(authFormActionTypes).map((key, i) => {
