@@ -9,7 +9,7 @@ import {
 
 
 function BlogForm(props) {
-  const { formInput, form, onChangeInput, onBlurInput, onImageChange } = props;
+  const { formInput, form, onChangeInput, onImageChange } = props;
   return (
     <>
       {formInput.map((input, index) => {
@@ -20,7 +20,7 @@ function BlogForm(props) {
               label={input.label}
               value={form[input.fieldName]}
               onChange={onChangeInput(input.fieldName)}
-              onBlur={onBlurInput(input.fieldName)}
+              // onBlur={onBlurInput(input.fieldName)}
               error={input.error}
               helperText={input.helperText}
               {...input.otherProps}

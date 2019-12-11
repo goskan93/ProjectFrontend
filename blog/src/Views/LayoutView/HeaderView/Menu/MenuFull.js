@@ -33,6 +33,7 @@ function MenuFull(props) {
                   props.history.push(PATHS.HOME);
                   return true;
                 }
+                return match
               }}
             >
               {item.itemText}

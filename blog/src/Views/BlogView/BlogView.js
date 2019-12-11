@@ -9,6 +9,7 @@ import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
 import { PATHS } from "../../Utils/routes";
 import { notifySuccess } from "../../Utils/notifications";
 import { getList } from "../../Utils/utils";
+import { validateBlogForm } from "../../Utils/validation";
 import CustomButton from "../../Components/CustomButton";
 
 function BlogView(props) {
@@ -65,15 +66,15 @@ function BlogView(props) {
     onChangeForm({ ...form, [fieldName]: value });
   };
 
-  const onBlurInput = fieldName => value => {
-    //TODO: validation
-    //here validate inputs
-    //find element with this field name
-    // const formInputUpdated = formInput.map(x =>
-    //   x.fieldName === fieldName ? { ...x, error: !x.error } : x
-    // );
-    // onChangeFormInput(formInputUpdated);
-  };
+  // const onBlurInput = fieldName => value => {
+  //   TODO: validation
+  //   here validate inputs
+  //   find element with this field name
+  //   const formInputUpdated = formInput.map(x =>
+  //     x.fieldName === fieldName ? { ...x, error: !x.error } : x
+  //   );
+  //   onChangeFormInput(formInputUpdated);
+  // };
 
   const onImageChange = () => e => {
     const file = e.target.files[0];
@@ -93,21 +94,31 @@ function BlogView(props) {
 
   const sendForm = async () => {
     //TODO: validate
-    const objectToSend = {...form};
-    delete objectToSend.Languages;
-    delete objectToSend.Countries;
-    delete objectToSend.BlogId;
-    objectToSend.Languages = form.Languages.map((item, _) => item.value);
-    objectToSend.Countries = form.Countries.map((item, _) => item.value);
-    const url = mode === 'new' ? ApiUrlsDict.CreateBlog : ApiUrlsDict.UpdateBlog.replace(":BlogId", blogId)
-    const method = mode === 'new' ? "POST" : "PUT"
-    const response = await sendWebRequest(url,method,objectToSend,{Authorization: `Token ${token}`, "Content-Type": "application/json"});
-    if(response.Message == "OK"){
-      const path = mode === 'new' ? PATHS.HOME : PATHS.BLOGLIST;
-      props.history.push(path);
-      notifySuccess(response.result.Message ? response.result.Message : "You updated your blog.");
-    }else {
-      console.log(response.result);
+    const validation = validateBlogForm(form)
+    if(validation.length > 0){
+      var updatedFormInput = formInput
+      updatedFormInput.map(item => {
+        var x = Object.entries(validation).find(key => key == item.file).value
+        return x ? {...item, error: true, helperText: helperText[1]};
+        }
+      )
+    }else{
+      const objectToSend = {...form};
+      delete objectToSend.Languages;
+      delete objectToSend.Countries;
+      delete objectToSend.BlogId;
+      objectToSend.Languages = form.Languages.map((item, _) => item.value);
+      objectToSend.Countries = form.Countries.map((item, _) => item.value);
+      const url = mode === 'new' ? ApiUrlsDict.CreateBlog : ApiUrlsDict.UpdateBlog.replace(":BlogId", blogId)
+      const method = mode === 'new' ? "POST" : "PUT"
+      const response = await sendWebRequest(url,method,objectToSend,{Authorization: `Token ${token}`, "Content-Type": "application/json"});
+      if(response.Message == "OK"){
+        const path = mode === 'new' ? PATHS.HOME : PATHS.BLOGLIST;
+        props.history.push(path);
+        notifySuccess(response.result.Message ? response.result.Message : "You updated your blog.");
+      }else {
+        console.log(response.result);
+      }
     }
   };
 
@@ -140,7 +151,7 @@ function BlogView(props) {
                     form={form}
                     formInput={formInput}
                     onChangeInput={onChangeInput}
-                    onBlurInput={onBlurInput}
+                    // onBlurInput={onBlurInput}
                     onImageChange={onImageChange}
                     {...props}
                   />

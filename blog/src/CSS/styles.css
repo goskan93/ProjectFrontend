@@ -27,3 +27,10 @@
     color: #BF214B;
   }
   
+  .Toastify__toast--success {
+    background-color: #0E6973 !important;
+  }
+
+  .Toastify__toast--error  {
+    background-color: #BF214B !important;
+  }

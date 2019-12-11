@@ -63,7 +63,7 @@ export const blogFormInputsState = {
       value:[],
       fieldName: "Countries",
       otherProps: {},
-      helperText: "Countries that information can be found on your blog."
+      helperText: ["Countries that information can be found on your blog.", ""]
     },
     {
       inputType: "SelectInput",
@@ -72,7 +72,7 @@ export const blogFormInputsState = {
       value:[],
       fieldName: "Languages",
       otherProps: {},
-      helperText: "Languages that you writing your blog with."
+      helperText: ["Languages that you writing your blog with.", ""]
     },
     {
       inputType: "CheckBoxInput",

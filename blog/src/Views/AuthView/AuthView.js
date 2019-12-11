@@ -14,6 +14,7 @@ import {
 } from "../../Utils/validation";
 import { login } from "../../Store/Modules/authModule";
 import { ApiUrlsDict, sendWebRequest } from "../../Utils/WebAPI";
+import { darkpink } from "../../Utils/colors";
 import { notifySuccess, notifyError } from "../../Utils/notifications";
 import { PATHS } from "../../Utils/routes";
 import CustomButton from "../../Components/CustomButton";
@@ -67,25 +68,29 @@ function AuthView(props) {
         objectToSend.password2 = authForm.password2;
         urlName = "Register";
       }
-      const response = await sendWebRequest(
-        ApiUrlsDict[urlName],
-        "POST",
-        objectToSend,
-        {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json"
+      try{
+        const response = await sendWebRequest(
+          ApiUrlsDict[urlName],
+          "POST",
+          objectToSend,
+          {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+          }
+        );
+        //login
+        if (response.Message === "OK" && response.result.key) {
+          props.dispatch(login({ token: response.result.key }));
+          props.history.push(PATHS.HOME);
+          notifySuccess("Login successfully!");
+        } else {
+          notifyError(response.result.message);
+          if (response.result.status === 400) {
+            showErrorMsg("Email or password incorrect.");
+          }
         }
-      );
-      //login
-      if (response.Message === "OK" && response.result.key) {
-        props.dispatch(login({ token: response.result.key }));
-        props.history.push(PATHS.HOME);
-        notifySuccess("Login successfully!");
-      } else {
-        notifyError(response.result);
-        if (response.result.status === 400) {
-          showErrorMsg("Email or password incorrect.");
-        }
+      }catch(e){
+        notifyError("Opps! There is a problem with connection.")
       }
     }
   };
@@ -95,12 +100,9 @@ function AuthView(props) {
     <Grid container direction="row" justify="center" alignItems="center">
       <Grid item xs={2} md={3} />
       <Grid item xs={8} md={4}>
-        {errorMsg &&
-          errorMsg.split("\n").map((err, i) => (
-            <span style={{ color: "red", fontSize: 18 }} key={i}>
-              {err}
-            </span>
-          ))}
+        {errorMsg && errorMsg.split("\n").map((err, i) => (
+          <span style={{ color: darkpink, fontSize: 16 }} key={i}>{err}</span>
+         ))}
         <AuthForm
           onChangeInput={(fieldName, value) => onChangeInput(fieldName, value)}
           onBlurInput={fieldName => onBlurInput(fieldName)}
