@@ -96,12 +96,12 @@ function BlogView(props) {
     //TODO: validate
     const validation = validateBlogForm(form)
     if(validation.length > 0){
-      var updatedFormInput = formInput
-      updatedFormInput.map(item => {
-        var x = Object.entries(validation).find(key => key == item.file).value
-        return x ? {...item, error: true, helperText: helperText[1]};
-        }
-      )
+      // var updatedFormInput = formInput
+      // updatedFormInput.map(item => {
+      //   var x = Object.entries(validation).find(key => key == item.file).value
+      //   return x ? {...item, error: true, helperText: helperText[1]};
+      //   }
+      // )
     }else{
       const objectToSend = {...form};
       delete objectToSend.Languages;

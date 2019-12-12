@@ -82,15 +82,15 @@ export const blogFormInputsState = {
     },
     {
       inputType: "CheckBoxInput",
-      label: "Travel with Animals",
-      fieldName: "flaTravelWithAnimals",
-      otherProps: { xs: 6, md: 6 }
+      label: "Travel with Kids",
+      fieldName: "flaTravelWithChildren",
+      otherProps: {xs: 6, md: 6 }
     },
     {
       inputType: "CheckBoxInput",
-      label: "Travel with Children",
-      fieldName: "flaTravelWithChildren",
-      otherProps: {}
+      label: "Travel with Animals",
+      fieldName: "flaTravelWithAnimals",
+      otherProps: { xs: 12 }
     },
     {
       inputType: "TextInput",
