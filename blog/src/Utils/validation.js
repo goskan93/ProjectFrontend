@@ -40,28 +40,37 @@ function validateAuthForm(authForm) {
 
 function validateBlogForm(blogForm){
   let errorMsg = []
-  if(blogForm.Name.length > 120 )
-    errorMsg.Name = "Name cannot be longer than 120 letters."  
-  if(blogForm.Name.length < 2 )
-    errorMsg.Name = "Name is too short."
-  if(blogForm.Instagram.length > 120)
-    errorMsg.Instagram = "Instagram nick is too long."
-  if(blogForm.Youtube.length > 120)
-    errorMsg.Youtube = "Youtube nick is too long."
-  if(blogForm.Facebook.length > 120)
-    errorMsg.Facebook = "Facebook nick is too long."  
-  if(validateUr(blogForm.Website))
-    errorMsg.Website = "Website URL is not correct."
-  if(blogForm.Website.length > 120)
-    errorMsg.Website = `${errorMsg.Website} (too long)`
-  if(!blogForm.Languages.length > 0)
-    errorMsg.Languages = "At least one language must be given."
-  if(!blogForm.Countries.length > 0)
-    errorMsg.Countries = "At least one country must be given."
-  if(blogForm.About.length > 1000)
-    errorMsg.Youtube = "Infos about is too long."
-  if(!blogForm.Instagram && !blogForm.Facebook && !blogForm.Youtube && !blogForm.Website)
-    errorMsg.All = "At least one social media or website must be given."
+  if(blogForm.name.length > 120 )
+    errorMsg.name = "Name cannot be longer than 120 letters."  
+  if(blogForm.name.length < 2 )
+    errorMsg.name = "Name is too short."
+  if(blogForm.instagram.length > 120)
+    errorMsg.instagram = "Instagram nick is too long."
+
+  if(validateUr(blogForm.website))
+    errorMsg.website = "Website URL is not correct."
+  if(blogForm.website.length > 120)
+    errorMsg.website = `${errorMsg.website} (too long)`
+
+  if(validateUr(blogForm.facebook))
+    errorMsg.facebook = "Facebook URL is not correct."
+  if(blogForm.facebook.length > 120)
+    errorMsg.facebook = `${errorMsg.facebook} (too long)`
+
+  if(validateUr(blogForm.youtube))
+    errorMsg.youtube = "Youtube URL is not correct."
+  if(blogForm.youtube.length > 120)
+    errorMsg.youtube = `${errorMsg.youtube} (too long)`
+
+
+  if(!blogForm.languages.length > 0)
+    errorMsg.languages = "At least one language must be given."
+  if(!blogForm.countries.length > 0)
+    errorMsg.countries = "At least one country must be given."
+  if(blogForm.about.length > 1000)
+    errorMsg.youtube = "Infos about is too long."
+  if(!blogForm.instagram && !blogForm.facebook && !blogForm.youtube && !blogForm.website)
+    errorMsg.all = "At least one social media or website must be given."
   return errorMsg  
 }
 export { validateAuthFormInput, validateAuthForm, validateBlogForm };

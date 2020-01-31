@@ -1,25 +1,25 @@
 //https://www.instagram.com/goskan93/?__a=1 API
 export const blogFormInputsState = {
-    BlogId: "",
-    Name: "",
-    Instagram: "",
-    Youtube: "",
-    Website: "",
-    Facebook: "",
-    Countries: [],
-    Languages: [],
+    blogId: "",
+    name: "",
+    instagram: "",
+    youtube: "",
+    website: "",
+    facebook: "",
+    countries: [],
+    languages: [],
     flaOrganizeTrips: false,
     flaTravelWithAnimals: false,
     flaTravelWithChildren: false,
-    About: "",
-    Photo: ""
+    about: "",
+    // photo: ""
   };
   
   export const blogFormInputs = [
     {
       inputType: "TextInput",
       label: "Name",
-      fieldName: "Name",
+      fieldName: "name",
       error: false,
       helperText: ["", ""],
       otherProps: {}
@@ -27,7 +27,7 @@ export const blogFormInputsState = {
     {
       inputType: "TextInput",
       label: "Ins",
-      fieldName: "Instagram",
+      fieldName: "instagram",
       error: false,
       helperText: ["Only your nickname.", ""],
       otherProps: { md: 6 }
@@ -35,15 +35,15 @@ export const blogFormInputsState = {
     {
       inputType: "TextInput",
       label: "YT",
-      fieldName: "Youtube",
+      fieldName: "youtube",
       error: false,
-      helperText: ["Only your nickname.", ""],
+      helperText: ["Url to your channel.", ""],
       otherProps: { md: 6 }
     },
     {
       inputType: "TextInput",
       label: "WWW",
-      fieldName: "Website",
+      fieldName: "website",
       error: false,
       helperText: ["Url to your website.", ""],
       otherProps: { md: 6 }
@@ -51,9 +51,9 @@ export const blogFormInputsState = {
     {
       inputType: "TextInput",
       label: "FB",
-      fieldName: "Facebook",
+      fieldName: "facebook",
       error: false,
-      helperText: ["Only your nickname.", ""],
+      helperText: ["Url to you fanpage.", ""],
       otherProps: { md: 6 }
     },
     {
@@ -61,7 +61,8 @@ export const blogFormInputsState = {
       apiUrlName: "CountriesList",
       options: {},
       value:[],
-      fieldName: "Countries",
+      error:false,
+      fieldName: "countries",
       otherProps: {},
       helperText: ["Countries that information can be found on your blog.", ""]
     },
@@ -70,7 +71,8 @@ export const blogFormInputsState = {
       apiUrlName: "LanguagesList",
       options: {},
       value:[],
-      fieldName: "Languages",
+      error:false,
+      fieldName: "languages",
       otherProps: {},
       helperText: ["Languages that you writing your blog with.", ""]
     },
@@ -95,7 +97,7 @@ export const blogFormInputsState = {
     {
       inputType: "TextInput",
       label: "About",
-      fieldName: "About",
+      fieldName: "about",
       error: false,
       helperText: ["", ""],
       otherProps: { multiline: true }

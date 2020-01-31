@@ -3,26 +3,16 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from "react-select";
-import { green, pink, darkpink, white, background } from '../Utils/colors'
+import { green, pink, darkpink, errorpink, background } from '../Utils/colors'
 
+//TODO: Do it better !!!!
 const customStyles = {
   option: (provided, _) => ({
     ...provided,
     fontWeight: 'bold',
     color: darkpink,
   }),
-  control: (provided, state) => ({
-    ...provided,
-    borderColor: state.isFocused ? green : pink,
-    boxShadow: 0,
-    borderWeigth: 1,
-    ':isFocused':{
-      borderColor: green,
-    },
-    ':hover': {
-      borderColor: green,
-    },
-  }),
+
   multiValue: (styles, _) => {
     return {
       ...styles,
@@ -44,19 +34,49 @@ const customStyles = {
     },
   }),
 }
+const control = {
+  control: (provided, state) => ({
+    ...provided,
+    borderColor: green ,
+    boxShadow: 0,
+    borderWeigth: 1,
+    ':isFocused':{
+      borderColor: green,
+    },
+    ':hover': {
+      borderColor: pink,
+    },
+  }),
+}
+const controlError = {
+  control: (provided, _) => ({
+    ...provided,
+    borderColor: errorpink,
+    boxShadow: 0,
+    borderWeigth: 1,
+    ':isFocused':{
+      borderColor: green,
+    },
+    ':hover': {
+      borderColor: pink,
+    },
+  }),
+}
 
 export default function SelectInput(props) {
-  const { options, isMulti, onChange, value, xs, md, helperText, helperTextStyle } = props;
+  const { options, isMulti, onChange, value, xs, md, helperText, helperTextStyle, error } = props;
+  const helperTextStyles = error ? {marginLeft:14, color:errorpink, ...helperTextStyle} : {marginLeft:14, ...helperTextStyle}
+  const customStyle = error ? {...customStyles, ...controlError} : {...customStyles, ...control}
   return (
     <Grid item xs={xs} md={md}>
       <Select
-        styles={customStyles}
+        styles={customStyle}
         options={options && options.constructor === Array ? options : []}
         isMulti={isMulti}
         value={value}
         onChange={e => onChange(e)}
       />
-      <FormHelperText style={{marginLeft:14, ...helperTextStyle}}>{helperText}</FormHelperText>
+      <FormHelperText style={helperTextStyles}>{error ? helperText[1] : helperText[0]}</FormHelperText>
     </Grid>
   );
 }
@@ -69,7 +89,8 @@ SelectInput.propTypes = {
   xs: PropTypes.number,
   md: PropTypes.number,
   helperText: PropTypes.string,
-  helperTextStyle: PropTypes.object
+  helperTextStyle: PropTypes.object,
+  error: PropTypes.bool
 };
 
 SelectInput.defaultProps = {
@@ -77,6 +98,7 @@ SelectInput.defaultProps = {
   value:[],
   xs: 12,
   md: 12,
-  helperText:"" ,
-  helperTextStyle: {}
+  helperText:["",""] ,
+  helperTextStyle: {},
+  error:false
 };

@@ -33,7 +33,8 @@ function BlogForm(props) {
               options={input.options}   
               value={form[input.fieldName]}           
               onChange={onChangeInput(input.fieldName)}
-              helperText={input.helperText}              
+              helperText={input.helperText}      
+              error={input.error}        
               {...input.otherProps}
             />
           );

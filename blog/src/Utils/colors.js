@@ -4,6 +4,7 @@ export const lightgrey = "#EDF5E1";
 
 export const background = "#C1D0D9" // light blue/grey
 export const pink = "#F26D85";
+export const errorpink = "#F44336";
 export const darkpink = "#BF214B";
 export const darkgreen = "#0E6973";
 export const green = "#0E7373";

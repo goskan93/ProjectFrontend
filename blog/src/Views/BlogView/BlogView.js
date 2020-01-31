@@ -92,23 +92,34 @@ function BlogView(props) {
 
   };
 
+  const cleanFormErrors = () => {
+    const updatedFormInput = formInput.map(x => {return {...x, error: false }});
+    return updatedFormInput
+  }
+
   const sendForm = async () => {
     //TODO: validate
+    var updatedFormInput = cleanFormErrors()
     const validation = validateBlogForm(form)
-    if(validation.length > 0){
-      // var updatedFormInput = formInput
-      // updatedFormInput.map(item => {
-      //   var x = Object.entries(validation).find(key => key == item.file).value
-      //   return x ? {...item, error: true, helperText: helperText[1]};
-      //   }
-      // )
+    if(validation){
+      formInput.forEach(x => {
+        var err = validation[x.fieldName]
+        if(err){
+          var helperText =  formInput.find(z => z.fieldName === x.fieldName).helperText[0]
+          updatedFormInput = updatedFormInput.map((y) => y.fieldName === x.fieldName ? {...y, error: true, helperText:[helperText, err]} : y ) 
+        }              
+      })      
+      onChangeFormInput(updatedFormInput)
+      if(validation.all){
+        
+      }
     }else{
       const objectToSend = {...form};
-      delete objectToSend.Languages;
-      delete objectToSend.Countries;
-      delete objectToSend.BlogId;
-      objectToSend.Languages = form.Languages.map((item, _) => item.value);
-      objectToSend.Countries = form.Countries.map((item, _) => item.value);
+      delete objectToSend.languages;
+      delete objectToSend.countries;
+      delete objectToSend.blogId;
+      objectToSend.Languages = form.languages.map((item, _) => item.value);
+      objectToSend.Countries = form.countries.map((item, _) => item.value);
       const url = mode === 'new' ? ApiUrlsDict.CreateBlog : ApiUrlsDict.UpdateBlog.replace(":BlogId", blogId)
       const method = mode === 'new' ? "POST" : "PUT"
       const response = await sendWebRequest(url,method,objectToSend,{Authorization: `Token ${token}`, "Content-Type": "application/json"});
